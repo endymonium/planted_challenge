@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Planted Challange
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Notes
 
-## Available Scripts
+- The idea was to try to use ChartGPT as much as possible to solve this challenge, therefore the code is a little bit barebone (no tests, etc)
+- I assumed the result should be filtered based on the distance, in real life I would of course clarify that assumption with the user story creator :)
 
-In the project directory, you can run:
+## Project Setup
 
-### `npm start`
+`npx create-react-app planted-challenge`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+then to start:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+`npm start`
 
-### `npm test`
+## ChartGPT Input
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Main structure
 
-### `npm run build`
+```
+Create a React component with a select based on the variable locations. If you select a location it finds the three closest plantations from the variable plantations, based on distance and displays the id, projectName and the distance in km in a list.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Also provide a search field that filters the locations based on name.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+var locations = [
+    {
+        "name": "Neu-Ulm",
+        "latitude": 48.4,
+        "longitude": 10.0167
+    },
+ ]
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+var plantations = [
+  {
+    id: 4,
+    type: 'CNT',
+    projectName: 'Bäume pflanzen im Kottenforst',
+    status: 'planted',
+    forestOwnership: 'public',
+    forestOwner: 'Nordrhein-Westfalen',
+    treeQuantity: 180,
+    location: 'Kottenforst bei Bonn',
+    coordinatesUrl: 'https://goo.gl/maps/2TjYv8vgP4tMmNBG7',
+    latitude: '50.671306',
+    longitude: '7.049528',
+    startId: 832,
+    endId: 1011,
+    startDate: "Frühjahr '22",
+    comment: '',
+    area: 'Bonn',
+  },
+]
+```
 
-### `npm run eject`
+### Filter based on distance
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+Given the following array of objects
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[
+ { id: 28, projectName: "Pflanzung mit Jugendlichen im Holter Wald", distance: 449.0427279465062 }
+ { id: 29, projectName: "Pflanzung mit Jugendlichen im Holter Wald", distance: 449.0427279465062 }
+]
+​
+create a javascript function which filters out all duplicates based on distance
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Distance calcuation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+Create a javascript function which calculates the distance in km between two points defined bat latidude and longitude. The Results should be an integer.
+```
 
-## Learn More
+### Findings
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Output differs a lot based on slight wording changes and previous executions
+- Code was not bug free, but overall helpfull, but I can't say if it is faster then doing it without
+- definitively helps with the creation of specialized functions, eg the lat/long distance calculations
+- but you can't be sure the the functions works correctly -> a lot of (automatic) tests needed
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+But overall a very interesting piece of technology!
